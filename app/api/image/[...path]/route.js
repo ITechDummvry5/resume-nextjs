@@ -27,7 +27,7 @@ export async function GET(_request, { params }) {
       body = result.Body;
       return new Response(body.transformToWebStream(), { headers: { "Content-Type": result.ContentType || contentType, "Cache-Control": "public, max-age=300, stale-while-revalidate=60", "X-Content-Type-Options": "nosniff" } });
     }
-    if (process.env.VERCEL === "1") return new NextResponse("Private image storage is not configured. Configure Cloudflare R2 environment variables.", { status: 503 });
+    
     const file = path.resolve(ROOT, key);
     if (!file.startsWith(ROOT + path.sep)) return new NextResponse("Not found", { status: 404 });
     body = await readFile(file);
